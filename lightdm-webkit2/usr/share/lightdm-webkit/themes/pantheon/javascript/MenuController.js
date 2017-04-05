@@ -25,6 +25,7 @@ MenuController.prototype.buildSessionMenu = function() {
 		});
 	});
 };
+
 MenuController.prototype.buildLangugageMenu = function() {
 	lightdm.layouts.forEach(function(language) {
 		$('<li><a href="">' + language.description + '</a></li>').appendTo('#languageMenu > ul');
