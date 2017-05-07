@@ -7,8 +7,15 @@
 
 alias ls='ls --color=auto'
 #PS1='[\u@\h \W]\$ '
-PS1='\[\033[31m\]\h\[\033[34m\]@\u:\[\033[0;32m\]\w\[\033[33m\]>>> \[\033[0m\]' 
+PS1='\[\033[31m\]\h\[\033[34m\]@\u:\[\033[0;32m\]\w\[\033[33m\]\n\033[7C~>>> \[\033[0m\]' 
+#PS1='\[\033[31m\]\h\[\033[34m\]@\u:\[\033[0;32m\]\w\[\033[33m\]>>> \[\033[0m\]' 
+#	if [[ ${EUID} == 0 ]] ; then
 
+#PS1='\[\033[31m\]\h\[\033[34m\]@\u:\[\033[0;32m\]\w\[\033[33m\]>>> \[\033[0m\]' 
+#    else
+#PS1='\[\033[31m\]\h\[\033[34m\]@\u:\[\033[0;32m\]\w\[\033[33m\]\n\033[7C~>>> \[\033[0m\]' 
+#	fi
+PS1="$PS1"'$([ -n "$TMUX" ] && tmux setenv TMUXPWD_$(tmux display -p "#D" | tr -d %) "$PWD")'
 #fcitx configure.
 export GTK_IM_MODULE=fcitx
 export QT_IM_MODLUE=fcitx
@@ -37,7 +44,7 @@ else if [ -e /usr/bin/virtualenvwrapper.sh ];then
          source /usr/bin/virtualenvwrapper.sh
     fi
 fi
-
+export EDITOR=vim
 #避如果没有启动虚拟环境，系统也安装了pip工具，那么套件将被安装在系统环境中，为了避免发生此事，可以在~/.bashrc文件中加上此句
 export PIP_VIRTUALENV_BASE=$WORKON_HOME
 export PIP_RESPECT_VIRTUALENV=true
