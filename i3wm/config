@@ -1,0 +1,445 @@
+###################################################################################################
+#                (`\ .-') /` _   .-')    
+#                     `.( OO ),'( '.( OO )_  
+#  ,-.-')  .-----. ,--./  .--.   ,--.   ,--.)
+#  |  |OO)/  -.   \|      |  |   |   `.'   | 
+#  |  |  \'-' _'  ||  |   |  |,  |         | 
+#  |  |(_/   |_  < |  |.'.|  |_) |  |'.'|  | 
+# ,|  |_.'.-.  |  ||         |   |  |   |  | 
+#(_|  |   \ `-'   /|   ,'.   |   |  |   |  | 
+#  `--'    `----'' '--'   '--'   `--'   `--' 
+
+########################################## Set variables ##########################################
+set $mod Mod4
+set $Alt Mod1
+
+set $beige       #ebdbb2
+set $darkgray    #1d2021
+set $gray        #9e9e9e
+set $lightgray   #282828
+set $lightergray #32302f
+set $grayorange  #928374
+set $darkred     #B71C1C
+set $green       #2E7D32
+set $darkgreen   #1B5E20
+set $lightgreen  #f495ed
+#set $lightgreen  #6495ed
+
+set $WS1  1: 
+set $WS2  2: 
+#set $WS2  2: 
+set $WS3  3:📂
+#set $WS3  3:
+#set $WS4  4:
+set $WS4  4:📝
+#set $WS4  4:
+set $WS5  5:
+#set $WS6  6: 
+set $WS6  6:🎧
+#set $WS6  6: 
+set $WS7  7:🎬
+#set $WS7  7:
+set $WS8  8:
+set $WS9  9: 
+#set $WS0  10:
+#set $WS9  9: 
+set $WS0  10:📚 
+#set $WS0  10: 
+#set $WS0  10: 
+#set $WS7  7:
+#set $WS8  8:
+
+#set $WS9  9:
+#set $WS0 10:
+
+set $default_gaps_inner 10
+set $default_gaps_outer 0
+
+set $borderWidth 1.5
+set $term  terminator
+####################################################################################################
+
+font pango:CodeNewRoman Nerd Font 9
+
+gaps inner $default_gaps_inner
+gaps outer $default_gaps_outer
+smart_gaps on
+smart_borders on
+
+workspace_auto_back_and_forth yes
+force_display_urgency_hint 0 ms
+focus_on_window_activation urgent
+
+floating_minimum_size -1 x -1
+floating_maximum_size 1000 x 750
+
+#                       BORDER      BACKGROUND  TEXT      INDICATOR    CHILD_BORDER
+#client.focused          $darkgray   $darkgray   $green    $darkgreen   $darkgreen
+client.focused          $darkgray   $darkgray   $green    $lightgreen   $lightgreen
+client.unfocused        $darkgray   $darkgray   $gray     $darkgray    $darkgray
+client.focused_inactive $darkgray   $darkgray   $gray     $darkgray    $darkgray
+client.urgent           $darkgray   $darkgray   $darkred  $darkgray    $darkred
+client.background       $darkgray
+
+# Enable $mod+Mouse dragging floating windows
+floating_modifier $mod
+
+# Launch terminal. Alternatively launch it in floating mode for temporary stuff like pass.
+bindsym $mod+Return exec $term
+bindsym $mod+Shift+Return exec $term -r float
+
+#bindsym Print exec shutter -s -o ~/Pictures/shot/%Y-%m-%d-%T.png 
+bindsym --release Print exec scrot $HOME/Pictures//Screenshots/screenshot-$(date +%Y-%m-%d_%H-%M-%S).jpg && notify-send "Screenshot Succeed"                            
+bindsym --release Shift+Print exec scrot -s $HOME/Pictures/Screenshots/screenshot-$(date +%Y-%m-%d_%H-%M-%S).jpg)
+# Program launcher
+bindsym $mod+d exec --no-startup-id j4-dmenu-desktop
+bindsym $mod+Shift+d exec rofi -show run
+#bindsym $mod+Shift+d exec --no-startup-id j4-dmenu-desktop --demu 'rofi -dmenu'
+#bindsym $mod+Shift+d exec --no-startup-id i3-dmenu-desktop --dmenu='rofi -dmenu'
+
+# Launch rofipass
+bindsym $mod+q exec rofi-pass
+
+# Close selected window
+bindsym $mod+Shift+q kill
+
+
+# change focus
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# move focused window
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+
+bindsym $Alt+h split h
+bindsym $Alt+v split v
+
+bindsym $mod+f fullscreen toggle
+bindsym $mod+Shift+f fullscreen toggle global
+
+# Switch tiling modes
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# Enable floating / Switch between floating and tiled windows
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+space focus mode_toggle
+
+# Select multiple windows
+bindsym $mod+a focus parent
+bindsym $mod+Shift+a focus child
+
+bindsym $mod+Shift+minus move scratchpad
+bindsym $mod+Shift+plus scratchpad show
+
+# Float window and pin in to top-right corner (1920x1080)
+bindsym $mod+Shift+s sticky toggle
+bindsym $mod+y fullscreen disable; floating enable; resize set 400 300; sticky enable;\
+move window to position 966 8
+#----------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------
+
+#****************************************工作区操作**********************************************
+
+# => 自定义窗口（支持定义边框类型，窗口布局，大小调整，自动归类工作区等等，多个定义用,隔开）
+#for_window [class="(?i)thunar"] move container to workspace $WS3,workspace $WS3 
+#for_window [class="(?i)thunar"] move container to workspace $WS3, workspace $WS3,layout tabbed
+for_window [class="(?i)firefox"] layout tabbed
+#for_window [class="(?i)thunar"] floating enable,border none,floating_maximum_size 60 x 40 
+#for_window [class="(?i)thunar"] move container to workspace $WS3, workspace $WS3, layout tabbed
+for_window [class="(?i)gvim|sublime*|atom|oni"] workspace $WS4
+for_window [class="(?i)wps*|epdfview"] workspace $WS0
+for_window [class="(?i)netease-cloud-music*"] workspace $WS6, floating enable 
+#for_window [class="(?i)deadbeef*"]  shrink width  50 px or 50ppt,shrink height 20 px or 20ppt
+#for_window [class="(?i)uget*"]  shrink width  50 px or 50ppt,shrink height 20 px or 20ppt
+for_window [class="(?i)mpv*"] workspace $WS5
+#for_window [class="(?i)feh*"] layout tabbed
+#for_window [class="(?i)sublime*"] workspace $WS4
+#for_window [class="(?i)uget*"] floating enable
+for_window [class="(?i)virtual*"] floating enable
+for_window [class="(?i)xfce4-terminal*"] floating enable
+for_window [class="(?i)file-roller*"] floating enable
+for_window [class="(?i)gpicview*"] floating enable
+for_window [class="(?i)viewnior|(?i)feh|(?i)mplayer|(?i)mpv|(?i)steam|(?i)gsimplecal|(?i)gtk-gnash|(?i)qjackctl|(?i)downthemall|(?i)transmission*"] floating enable
+  # Force floating mode for dialogs
+for_window [window_role="pop-up|task_dialog|downtheall"] floating enable
+#****************************************工作区操作**********************************************
+
+# switch to workspace
+bindsym $mod+1 workspace $WS1, exec --no-startup-id ~/bin/st terminator
+bindsym $mod+2 workspace $WS2, exec --no-startup-id ~/bin/st firefox
+#bindsym $mod+3 workspace $WS3, exec --no-startup-id WizNote > /dev/null 2>&1
+bindsym $mod+3 workspace $WS3, exec --no-startup-id ~/bin/st thunar
+#bindsym $mod+3 workspace $WS3,exec --no-startup-id ~/bin/st thunar
+bindsym $mod+4 workspace $WS4, 
+bindsym $mod+5 workspace $WS5, exec --no-startup-id ~/bin/st mpv
+bindsym $mod+6 workspace $WS6, exec --no-startup-id ~/bin/st deadbeef
+#bindsym $mod+6 workspace $WS6, exc --no-startup-id ~/bin/st virtualbox
+bindsym $mod+7 workspace $WS7, exec --no-startup-id ~/bin/st virtualbox
+#bindsym $mod+7 workspace $WS7
+bindsym $mod+8 workspace $WS8, exec --no-startup-id WizNote > /dev/null 2>&1
+bindsym $mod+9 workspace $WS9,
+bindsym $mod+0 workspace $WS0, exec --no-startup-id ~/bin/st epdfview
+
+
+bindsym $mod+shift+1 move container to workspace $WS1, workspace $WS1
+bindsym $mod+shift+2 move container to workspace $WS2, workspace $WS2
+bindsym $mod+shift+3 move container to workspace $WS3, workspace $WS3
+bindsym $mod+shift+4 move container to workspace $WS4, workspace $WS4
+bindsym $mod+shift+5 move container to workspace $WS5, workspace $WS5
+bindsym $mod+shift+6 move container to workspace $WS6, workspace $WS6
+bindsym $mod+shift+7 move container to workspace $WS7, workspace $WS7
+bindsym $mod+shift+8 move container to workspace $WS8, workspace $WS8
+bindsym $mod+shift+9 move container to workspace $WS9, workspace $WS9
+bindsym $mod+shift+0 move container to workspace $WS0, workspace $WS0
+
+#打开软件时自动移至相应工作区
+#assign [class="URxvt|xfce4-terminal"] $WS1
+#assign [class="Firefox"] $WS2
+assign [class="Thunar"] $WS3
+#assign [class="Shutter"] $WS3
+assign [class="Gvim|^Subl|^Atom"] $WS4
+assign [class="^Mplayer|^mpv"] $WS5
+assign [class="DeaDBeef"] $WS6
+assign [class="Virtualbox"] $WS7
+assign [class="WizNote"] $WS8
+assign [class="Amule*"] $WS9
+assign [class="^Wps*|Epdfview*|^Document*|^Evi*|^Foxit*"] $WS0
+# Switch to X workspace
+#bindsym $mod+1 workspace $ws1
+#bindsym $mod+2 workspace $ws2
+#bindsym $mod+3 workspace $ws3
+#bindsym $mod+4 workspace $ws4
+#bindsym $mod+5 workspace $ws5
+#bindsym $mod+6 workspace $ws6
+#bindsym $mod+7 workspace $ws7
+#bindsym $mod+8 workspace $ws8
+#bindsym $mod+9 workspace $ws9
+#bindsym $mod+0 workspace $ws10
+#bindsym $mod+Tab workspace back_and_forth
+#
+# Move selected window to X workspace
+#bindsym $mod+Shift+1 move container to workspace number $ws1
+#bindsym $mod+Shift+2 move container to workspace number $ws2
+#bindsym $mod+Shift+3 move container to workspace number $ws3
+#bindsym $mod+Shift+4 move container to workspace number $ws4
+#bindsym $mod+Shift+5 move container to workspace number $ws5
+#bindsym $mod+Shift+6 move container to workspace number $ws6
+#bindsym $mod+Shift+7 move container to workspace number $ws7
+#bindsym $mod+Shift+8 move container to workspace number $ws8
+#bindsym $mod+Shift+9 move container to workspace number $ws9
+#bindsym $mod+Shift+0 move container to workspace number $ws10
+
+bindsym $mod+Shift+c reload
+bindsym $mod+Shift+r restart
+
+# Resize selected windows
+set $mode_resize \
+<span background='#2E7D32' foreground='black'>  Resize </span> \
+<span foreground='#ebdbb2'>L</span>eft \
+<span foreground='#ebdbb2'>R</span>ight \
+<span foreground='#ebdbb2'>U</span>p \
+<span foreground='#ebdbb2'>D</span>own
+mode --pango_markup "$mode_resize" {
+  bindsym Left resize shrink width 10 px or 1 ppt
+  bindsym Down resize grow height 10 px or 1 ppt
+  bindsym Up resize shrink height 10 px or 1 ppt
+  bindsym Right resize grow width 10 px or 1 ppt
+
+  bindsym Shift+Left resize shrink width 20 px or 5 ppt
+  bindsym Shift+Down resize grow height 20 px or 5 ppt
+  bindsym Shift+Up resize shrink height 20 px or 5 ppt
+  bindsym Shift+Right resize grow width 20 px or 5 ppt
+
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
+}
+bindsym $mod+r mode "$mode_resize"
+
+## Power menu
+# Dependencies:
+# https://github.com/Arcaena/i3lock-color
+set $mode_power \
+<span background='#2E7D32' foreground='black'>  Power </span> \
+<span foreground='#ebdbb2'>L</span>ock \
+<span foreground='#ebdbb2'>E</span>xit \
+<span foreground='#ebdbb2'>S</span>uspend \
+<span foreground='#ebdbb2'>H</span>ibernate \
+<span foreground='#ebdbb2'>R</span>eboot \
+<span foreground='#ebdbb2'>P</span>oweroff
+mode --pango_markup "$mode_power" {
+  bindsym l mode "default", exec --no-startup-id ~/.config/i3/scripts/i3exit lock
+  bindsym e mode "default", exec --no-startup-id ~/.config/i3/scripts/i3exit logout
+  bindsym s mode "default", exec --no-startup-id ~/.config/i3/scripts/i3exit lock &&\
+  ~/.config/i3/scripts/i3exit suspend
+  bindsym h mode "default", exec --no-startup-id ~/.config/i3/scripts/i3exit hibernate
+  bindsym r mode "default", exec --no-startup-id ~/.config/i3/scripts/i3exit reboot
+  bindsym p mode "default", exec --no-startup-id ~/.config/i3/scripts/i3exit shutdown
+
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
+}
+bindsym $mod+Shift+e mode "$mode_power"
+
+# Enable floating for dialogs, pop-ups etc.
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="bubble"] floating enable
+for_window [window_role="task_dialog"] floating enable
+for_window [window_role="sogou-dialog"] floating enable
+for_window [window_role="Preferences"] floating enable
+for_window [window_type="dialog"] floating enable
+for_window [window_type="menu"] floating enable
+for_window [instance="__scratchpad"] floating enable
+for_window [class="(?i)pavucontrol"] floating enable
+for_window [class="(?i)lxappearance"] floating enable
+for_window [class="(?i)galculator"] floating enable
+for_window [class="(?i)$term" window_role="float"] floating enable
+for_window [class="(?i)gpick"] floating enable
+for_window [instance="QTCreator - Run"] floating enable
+
+# Steam
+for_window [class="^Steam$" title="Steam - News"] floating enable
+for_window [class="^Steam$" title=".* - Chat"] floating enable
+for_window [class="^Steam$" title="^Settings$"] floating enable
+for_window [class="^Steam$" title=".* - event started"] floating enable
+for_window [class="^Steam$" title=".* CD key"] floating enable
+for_window [class="^Steam$" title="^Steam - Self Updater$"] floating enable
+for_window [class="^Steam$" title="^Screenshot Uploader$"] floating enable
+for_window [class="^Steam$" title="^Steam Guard - Computer Authorization Required$"] floating enable
+for_window [title="^Steam Keyboard$"] floating enable
+
+# Disable floating
+for_window [class="(?i)nextcloud"] floating disable
+
+# Auto split new windows next to shortest edge. Requires xdotool
+#for_window [class=.*] exec $HOME/bin/auto-split
+
+# Disable titlebars, set window border
+for_window [class=".*"] border pixel $borderWidth
+
+# Default workspaces
+assign [class="(?i)syncthing"]                    $ws6
+# OpenGL games
+assign [title="OpenGL"]                           $ws7
+# Comms/Torrent
+assign [class="(?i)pidgin"]                       $ws8
+assign [class="(?i)TeamSpeak 3"]                  $ws8
+assign [class="(?i)qbittorrent"]                  $ws8
+# Music
+assign [class="(?i)pithos"]                       $ws9
+assign [class="(?i)clementine"]                   $ws9
+assign [class="(?i)spotify"]                      $ws9
+assign [class="(?i)netease-cloud-music"]                      $ws6
+assign [class="(?i)blockify-ui"]                  $ws9
+assign [class="(?i)franz"]                        $ws9
+# Steam
+assign [class="(?)Steam"]                         $ws10
+
+# Startup programs
+exec --no-startup-id fcitx &
+#exec --no-startup-id numlockx &
+exec --no-startup-id compton -cGbf --config ~/.config/compton/compton.conf &
+exec --no-startup-id dunst &
+exec --no-startup-id redshift &
+#exec --no-startup-id anamnesis --start &
+#exec --no-startup-id nm-applet
+#exec --no-startup-id sleep .2 && exec_always transset -n i3bar 0.55 &
+#exec --no-startup-id menutray -g -i
+
+# One wallpaper or change between several on restart
+#exec_always --no-startup-id feh --randomize --bg-fill ~/Attēli/Wallpapers/rotation/*
+#exec_always --no-startup-id feh --bg-fill ~/Attēli/Fona\ tapetes/poly/low-poly-texture-66.png
+#exec_always --no-startup-id exec $HOME/.config/i3/scripts/wallpaper.sh
+exec --no-startup-id ~/.config/i3/scripts/wallpaper.sh 2>/dev/null
+# Screenshots
+#bindsym --release Print exec "maim -d 0 $HOME/Attēli/Ekrānuzņēmumi/screenshot-\
+#$(date +%Y-%m-%d_%H-%M-%S).png"
+#bindsym --release Shift+Print exec "maim -s -d 0 -b 3 -c 0.72,0.108,0.108 $HOME/Attēli/Ekrānuzņēmumi/\
+#screenshot-$(date +%Y-%m-%d_%H-%M-%S).png"
+#bindsym --release Shift+Ctrl+Print exec "imgur-screenshot"
+
+# Frequently used programs
+bindsym $mod+b exec --no-startup-id firefox
+bindsym $mod+n exec --no-startup-id thunar
+bindsym $mod+m exec --no-startup-id $term -e ranger
+
+#volume
+bindsym XF86AudioRaiseVolume exec amixer -D pulse sset Master 1%+ && pkill -RTMIN+1 i3blocks
+bindsym XF86AudioLowerVolume exec amixer -D pulse sset Master 1%- && pkill -RTMIN+1 i3blocks
+# mute
+bindsym XF86AudioMute exec amixer sset Master toggle && killall -USR1 i3blocks
+# Modify volume
+# Requires https://github.com/graysky2/pulseaudio-ctl
+#bindsym $Alt+Up exec --no-startup-id "pulseaudio-ctl up 5; pkill -SIGRTMIN+5 i3blocks"
+#bindsym $Alt+Down exec --no-startup-id "pulseaudio-ctl down 5; pkill -SIGRTMIN+5 i3blocks"
+#bindsym $Alt+Left exec --no-startup-id "pulseaudio-ctl mute; pkill -SIGRTMIN+5 i3blocks"
+#bindsym $Alt+Right exec --no-startup-id "pulseaudio-ctl mute-input; pkill -SIGRTMIN+5 i3blocks"
+
+#bindsym $Alt+Return exec --no-startup-id pavucontrol
+
+# Start i3bar to display a workspace bar (plus the system information i3status
+# finds out, if available)
+
+
+######################################## polybar settings ##########################################
+#exec_always --no-startup-id $HOME/.config/polybar/launch.sh &
+
+########################################## i3bar settings ##########################################
+
+bar {
+  
+  i3bar_command i3bar -t 
+  status_command py3status 
+  #status_command SCRIPT_DIR=$HOME/.config/i3/i3blocks/blocks i3blocks -c $HOME/.config/i3/i3blocks/i3blocks.conf
+  #i3bar_command i3bar -t
+  position bottom
+  separator_symbol "|"
+  workspace_buttons yes
+  #tray_output VGA-0
+  tray_padding 0
+  strip_workspace_numbers yes
+  height 20
+  #font pango:xos4 Terminus, Font Awesome 8
+  font pango: Font Awesome 8
+ # font pango: DejaVu Serif 8
+
+  colors
+  {
+    statusline         $beige
+   #修改最后两位数更改分辨率
+    background      #101010b9
+   # background         $darkgray
+    separator          $darkgreen
+
+#                      BORDER        BACKGROUND    TEXT
+    focused_workspace  $darkgreen    $darkgreen    $beige
+    inactive_workspace $lightergray  $lightergray  $grayorange
+    #active_workspace   $darkgray     $darkgray     $beige
+    active_workspace   $darkgreen    $darkgreen     $beige
+    urgent_workspace   $darkred      $darkgray     $beige
+    binding_mode       $darkgray     $darkgray     $green
+  }
+}
+##
+#exec_always --no-startup-id transset -n i3bar 0.55 &
+####################################################################################################
